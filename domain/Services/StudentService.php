@@ -10,6 +10,10 @@ class StudentService{
         $this->task=new Student();
     }
 
+    public function get($student_id){
+        return $this->task->find($student_id);
+    }
+
     public function all(){
         return $this ->task->all();
         //$response['tasks']=$this->task->all();
@@ -40,7 +44,14 @@ class StudentService{
    
 
 
+      public function update(array $data,$stuent_id){
+        $task=$this->task->find($student_id);
+        $task->update($this->edit($task,$data));
+      }
 
+      public function edit(Student $student,$data){
+            return array_merge($student->toArray(),$data);
+      }
 
 
 }

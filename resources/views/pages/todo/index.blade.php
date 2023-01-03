@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+
+
+
 @section('content')
 
 <div class="container">
@@ -62,7 +65,8 @@
       </td>
       <td><a href="{{route('student.delete',$student->id)}}" class ="btn btn-danger">Delete</a>
       <a href="{{route('student.done',$student->id)}}" class ="btn btn-success">Change status</a>
-      <a href="javascript:void(0)" class ="btn btn-info"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Edit Student</a></td>
+      <a href="" class ="btn btn-success">Update Student</a>
+
     </tr>
     @endforeach
     
@@ -82,25 +86,9 @@
     </div>
 
 </div>
-<!--usage of bootstrap modal-->
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Main Student Edit</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="taskEditContent">
-        <h1>modal</h1>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+
 
 
 @endsection
@@ -115,3 +103,44 @@
     }
 </style>
 @endpush
+
+
+
+@push('js')
+
+<script>
+
+
+
+
+
+
+
+
+
+  //<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+ //window.taskEditModal()=taskEditModal();
+  function taskEditModal(student_id){
+    var data={
+      student_id:student_id,
+    };
+
+    $.ajax({
+      url:"{{route('student.edit')}}",
+      headers:{ 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')},
+      type:"GET",
+      datatype:'',
+      data:data,
+      success:function(response){
+        $('#editTask').modal('show');
+        $('#editTaskContent').html(response);
+      }
+    });
+  }
+
+
+</script>
+@endpush
+  
+
+      
